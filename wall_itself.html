@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wall</title>
+</head>
+<body>
+    <div id= 'top'>
+        <h1>CodingDojo Wall</h1>
+        <h3>Welcome [user.name]</h3>
+        <a href="">Log off</a>
+    </div>
+    <div id="posting">
+        <h2>Post a message</h2>
+        <form action="/messages" method="post">
+            <textarea name="message_content"></textarea>
+            <input type="submit" value="Post a message">
+        </form>
+        {% for message in messages %}
+        <div>
+            <h3>{{ message.name }} - {{ message.created_at }}</h3>
+            <p>{{ message.message }}</p>
+        </div>
+            {% for comment in comments %}
+                {% if comment.message_id == message.id %}
+                    <h3>{{ comment.name }} - {{ comment.created_at }}</h3>
+                    <p>{{ comment.comment }}</p>
+                {% endif %}
+            {% endfor %}
+        <form action="/comments" method="post">
+            <textarea name="message_content" rows="10"cols="70"></textarea>
+            <input type="hidden" name="message_id" value="{{message.id}}">
+            <input type="submit" value="Comment">
+        </form>
+        {% endfor %}
+    </div>
+</body>
+</html>
